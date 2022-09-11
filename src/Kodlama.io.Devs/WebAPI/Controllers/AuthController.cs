@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthsController : BaseController
     {
-
+        
         [HttpPost("Register")]
         public async Task<ActionResult> Register([FromBody] UserForRegisterCommand userForRegisterCommand)
         {
@@ -21,6 +21,11 @@ namespace WebAPI.Controllers
 
             return Ok(resultTokenDto);
         }
+
+
+
+
+
 
         [HttpPost("Login")]
         public async Task<ActionResult> Login([FromBody] UserForLoginCommand userForLoginCommand)

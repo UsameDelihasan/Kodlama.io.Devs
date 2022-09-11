@@ -19,7 +19,7 @@ namespace Persistence.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<GitAccount> GitAccountS { get; set; }
+        public DbSet<GitAccount> GitAccounts { get; set; } //değiştirildi
 
 
 
@@ -88,7 +88,7 @@ namespace Persistence.Contexts
             modelBuilder.Entity<Account>(a =>
             {
                 a.ToTable("Accounts");
-                a.HasMany(a => a.GitProfiles);
+                a.HasMany(a => a.GitAccounts);
                 
             });
 
@@ -98,6 +98,7 @@ namespace Persistence.Contexts
                 p.Property(p => p.Id).HasColumnName("Id");
                 p.Property(p => p.AccountId).HasColumnName("AccountId");
                 p.Property(p => p.AddressLink).HasColumnName("ProfileUrl");
+
                 p.HasOne(p => p.Account);
             });
 

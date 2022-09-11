@@ -30,7 +30,11 @@ namespace Application.Features.GitAccounts.Commands.CreateGitAccount
 
             public async Task<CreatedGitAccountDto> Handle(CreateGitAccountCommand request, CancellationToken cancellationToken)
             {
-                GitAccount framework = _mapper.Map<GitAccount>(request);
+                GitAccount framework = _mapper.Map<GitAccount>(request); 
+
+                framework.AccountId = request.AccountId;
+
+
                 GitAccount addedFramework = await _gitAccountRepository.AddAsync(framework);
                 CreatedGitAccountDto createdFrameworkDto = _mapper.Map<CreatedGitAccountDto>(addedFramework);
 

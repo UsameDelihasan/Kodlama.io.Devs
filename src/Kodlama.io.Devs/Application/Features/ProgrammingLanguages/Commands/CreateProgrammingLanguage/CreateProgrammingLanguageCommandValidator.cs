@@ -11,7 +11,7 @@ namespace Application.Features.ProgrammingLanguages.Commands.CreateProgrammingLa
     {
         public CreateProgrammingLanguageCommandValidator()
         {
-            RuleFor(c => c.Name).NotEmpty();
+            RuleFor(c => c.Name).NotEmpty().NotNull();
         }
     }
 }

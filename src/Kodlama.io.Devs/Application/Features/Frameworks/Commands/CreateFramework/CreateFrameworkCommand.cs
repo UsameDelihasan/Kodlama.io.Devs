@@ -38,8 +38,10 @@ namespace Application.Features.Frameworks.Commands.CreateFramework
             {
                 await frameworkBusinessRules.NameShouldBeTakenOnce(request.Name);
 
+                
 
                 Framework framework = _mapper.Map<Framework>(request);
+
                 Framework addedFramework = await _frameworkRepository.AddAsync(framework);
                 CreatedFrameworkDto createdFrameworkDto = _mapper.Map<CreatedFrameworkDto>(addedFramework);
 

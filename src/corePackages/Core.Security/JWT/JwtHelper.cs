@@ -12,6 +12,11 @@ namespace Core.Security.JWT;
 public class JwtHelper : ITokenHelper
 {
     public IConfiguration Configuration { get; }
+
+
+
+
+
     private readonly TokenOptions _tokenOptions;
     private DateTime _accessTokenExpiration;
 
@@ -19,15 +24,20 @@ public class JwtHelper : ITokenHelper
     {
         Configuration = configuration;
         _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+        
     }
 
     public AccessToken CreateToken(User user, IList<OperationClaim> operationClaims)
     {
         _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
+
         SecurityKey securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
         SigningCredentials signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
+
+
         JwtSecurityToken jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
         JwtSecurityTokenHandler jwtSecurityTokenHandler = new();
+
         string? token = jwtSecurityTokenHandler.WriteToken(jwt);
 
         return new AccessToken
@@ -36,6 +46,11 @@ public class JwtHelper : ITokenHelper
             Expiration = _accessTokenExpiration
         };
     }
+
+
+
+
+
 
     public RefreshToken CreateRefreshToken(User user, string ipAddress)
     {
@@ -69,6 +84,7 @@ public class JwtHelper : ITokenHelper
     private IEnumerable<Claim> SetClaims(User user, IList<OperationClaim> operationClaims)
     {
         List<Claim> claims = new();
+
         claims.AddNameIdentifier(user.Id.ToString());
         claims.AddEmail(user.Email);
         claims.AddName($"{user.FirstName} {user.LastName}");

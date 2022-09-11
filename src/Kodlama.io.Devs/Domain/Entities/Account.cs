@@ -10,7 +10,9 @@ namespace Domain.Entities
 {
     public class Account :User
     {
-        public virtual ICollection<GitAccount> GitProfiles { get; set; }
+        public virtual ICollection<GitAccount> GitAccounts { get; set; }
+
+        //public virtual ICollection<GitAccount> GitProfiles { get; set; } ICollection
         
 
         public Account()

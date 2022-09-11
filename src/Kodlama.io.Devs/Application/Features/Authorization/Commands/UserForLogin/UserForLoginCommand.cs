@@ -32,6 +32,7 @@ namespace Application.Features.Authorization.Commands.UserForLogin
 
             public async Task<ResultTokenDto> Handle(UserForLoginCommand request, CancellationToken cancellationToken)
             {
+
                 var userQueried = await _userRepository.GetAsync(
                 u => u.Email.ToLower() == request.Email.ToLower(),
                 include: m => m.Include(c => c.UserOperationClaims).ThenInclude(x => x.OperationClaim));
