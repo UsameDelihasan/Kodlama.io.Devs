@@ -13,6 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
+builder.Services.AddSecurityServices();
 
 
 
@@ -24,7 +25,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-//if (app.Environment.IsProduction())
+if (app.Environment.IsProduction())
 app.ConfigureCustomExceptionMiddleware();
 
 app.UseAuthorization();

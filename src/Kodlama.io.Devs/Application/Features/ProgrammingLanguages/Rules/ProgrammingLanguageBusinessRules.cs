@@ -29,5 +29,7 @@ namespace Application.Features.ProgrammingLanguages.Rules
         {
             if(programmingLanguage == null) throw new BusinessException("Programming language is not nullable");
         }
+
+        
     }
 }

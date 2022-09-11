@@ -22,10 +22,7 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
 
 
 
-    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate)
-    {
-        return await Context.Set<TEntity>().FirstOrDefaultAsync(predicate);
-    }
+    
 
     public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy =
@@ -134,5 +131,13 @@ public class EfRepositoryBase<TEntity, TContext> : IAsyncRepository<TEntity>, IR
         Context.Entry(entity).State = EntityState.Deleted;
         Context.SaveChanges();
         return entity;
+    }
+
+    public async Task<TEntity?> GetAsync(Expression<Func<TEntity, bool>> predicate, Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
+    {
+        IQueryable<TEntity> queryable = Query();
+        if (include != null) queryable = include(queryable);
+        if (predicate != null) queryable = queryable.Where(predicate);
+        return await queryable.FirstOrDefaultAsync();
     }
 }

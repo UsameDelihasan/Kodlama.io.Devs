@@ -19,12 +19,19 @@ namespace Application.Features.ProgrammingLanguages.Profiles
         {
             CreateMap<ProgrammingLanguage, CreateProgrammingLanguageCommand>().ReverseMap();
             CreateMap<ProgrammingLanguage, CreatedProgrammingLanguageDto>().ReverseMap();
+
             CreateMap<IPaginate<ProgrammingLanguage>, ProgrammingLanguageListModel>().ReverseMap();
             CreateMap<ProgrammingLanguage, ProgrammingLanguageListDto>().ReverseMap();
             CreateMap<ProgrammingLanguage, GetByIdProgrammingLanguageDto>().ReverseMap();
+
             CreateMap<ProgrammingLanguage, DeletedProgrammingLanguageDto>().ReverseMap();
+
             CreateMap<ProgrammingLanguage, UpdatedProgrammingLanguageDto>().ReverseMap();
             CreateMap<ProgrammingLanguage, UpdateProgrammingLanguageCommand>().ReverseMap();
+
+
+            
+
         }
         
     }

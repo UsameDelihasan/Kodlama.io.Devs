@@ -11,7 +11,7 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20220905073406_Init")]
+    [Migration("20220909023810_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,6 +22,45 @@ namespace Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Domain.Entities.Framework", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<int>("ProgrammingLanguageId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProgrammingLanguageId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProgrammingLanguageId");
+
+                    b.ToTable("Frameworks", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "WPF",
+                            ProgrammingLanguageId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "ASP.NET",
+                            ProgrammingLanguageId = 1
+                        });
+                });
 
             modelBuilder.Entity("Domain.Entities.ProgrammingLanguage", b =>
                 {
@@ -52,6 +91,17 @@ namespace Persistence.Migrations
                             Id = 2,
                             Name = "Java"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.Framework", b =>
+                {
+                    b.HasOne("Domain.Entities.ProgrammingLanguage", "ProgrammingLanguage")
+                        .WithMany()
+                        .HasForeignKey("ProgrammingLanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ProgrammingLanguage");
                 });
 #pragma warning restore 612, 618
         }
