@@ -24,7 +24,7 @@ namespace Application.Features.Authorization.Rules
         public async Task CheckIfUserExist(User user)
         {
            
-            if (user != null) throw new BusinessException("User could not be found!");
+            if (user == null) throw new BusinessException("User could not be found!");
         }
 
 

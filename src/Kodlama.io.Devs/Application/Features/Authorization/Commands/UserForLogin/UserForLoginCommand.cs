@@ -37,7 +37,7 @@ namespace Application.Features.Authorization.Commands.UserForLogin
                 u => u.Email.ToLower() == request.Email.ToLower(),
                 include: m => m.Include(c => c.UserOperationClaims).ThenInclude(x => x.OperationClaim));
 
-
+                
 
                 List<OperationClaim> operationClaims = new List<OperationClaim>() { };
 
@@ -47,6 +47,7 @@ namespace Application.Features.Authorization.Commands.UserForLogin
                 }
 
                 await _rules.CheckIfUserExist(userQueried);
+
                 await _rules.VerifyOfPasswordHash(request);
 
                 var accessToken = _tokenHelper.CreateToken(userQueried, operationClaims);
