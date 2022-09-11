@@ -11,7 +11,7 @@ namespace WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthsController : BaseController
+    public class AuthController : BaseController
     {
         
         [HttpPost("Register")]
