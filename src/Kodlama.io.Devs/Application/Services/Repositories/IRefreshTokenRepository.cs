@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Services.Repositories
 {
-    public interface IUserRepository : IAsyncRepository<User>, IRepository<User>
+    public interface IRefreshTokenRepository : IAsyncRepository<RefreshToken>, IRepository<RefreshToken>
     {
-      
-    }
 
-  
+    }
 }

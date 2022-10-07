@@ -20,6 +20,7 @@ namespace Persistence.Contexts
         public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
         public DbSet<Account> Accounts { get; set; }
         public DbSet<GitAccount> GitAccounts { get; set; } //değiştirildi
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
 
 
@@ -100,6 +101,24 @@ namespace Persistence.Contexts
                 p.Property(p => p.AddressLink).HasColumnName("ProfileUrl");
 
                 p.HasOne(p => p.Account);
+            });
+
+            modelBuilder.Entity<RefreshToken>(a =>
+            {
+                a.ToTable("RefreshTokens").HasKey(k => k.Id);
+                a.Property(p => p.Id).HasColumnName("Id");               
+                a.Property(p => p.UserId).HasColumnName("UserId");
+                a.Property(p => p.Expires).HasColumnName("Expires");
+                a.Property(p => p.Created).HasColumnName("Created");
+                a.Property(p => p.Revoked).HasColumnName("Revoked");
+                a.Property(p => p.CreatedByIp).HasColumnName("CreatedByIp");
+                a.Property(p => p.ReasonRevoked).HasColumnName("ReasonRevoked");
+                a.Property(p => p.Token).HasColumnName("Token");
+                a.Property(p => p.ReplacedByToken).HasColumnName("ReplacedByToken");
+
+                a.HasOne(p => p.User);
+
+
             });
 
 
