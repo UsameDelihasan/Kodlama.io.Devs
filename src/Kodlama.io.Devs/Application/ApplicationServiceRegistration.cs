@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Http;
 using Application.Features.Authorization.Rules;
 using Application.Features.Frameworks.Rules;
 using Application.Features.GitAccounts.Rules;
+using Application.Services.AuthServices;
 
 namespace Application
 {
@@ -30,7 +31,7 @@ namespace Application
             services.AddScoped<AuthorizationBusinessRules>();
             services.AddScoped<FrameworkBusinessRules>();
             services.AddScoped<GitAccountBusinessRules>();
-            
+            services.AddScoped<IAuthService, AuthManager>();
 
 
 

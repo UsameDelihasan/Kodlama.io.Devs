@@ -10,31 +10,37 @@ using Core.Security.Dtos;
 using Application.Features.Authorization.Dtos;
 using Application.Features.Authorization.Rules;
 using Microsoft.EntityFrameworkCore;
+using Application.Services.AuthServices;
 
 namespace Application.Features.Authorization.Commands.UserForLogin
 {
-    public class UserForLoginCommand : UserForLoginDto, IRequest<ResultTokenDto>
+    public class UserForLoginCommand :  IRequest<LoginDto>
     {
-        public class UserForLoginCommandHandler : IRequestHandler<UserForLoginCommand, ResultTokenDto>
+        public UserForLoginDto UserForLoginDto { get; set; }
+        public string ipAdress { get; set; }
+
+        public class UserForLoginCommandHandler : IRequestHandler<UserForLoginCommand, LoginDto>
         {
             private readonly IUserRepository _userRepository;
             private readonly IMapper _mapper;
             private readonly ITokenHelper _tokenHelper;
             private readonly AuthorizationBusinessRules _rules;
+            private readonly IAuthService _authService;
 
-            public UserForLoginCommandHandler(IUserRepository userRepository, IMapper mapper, ITokenHelper tokenHelper, AuthorizationBusinessRules rules)
+            public UserForLoginCommandHandler(IUserRepository userRepository, IMapper mapper, ITokenHelper tokenHelper, AuthorizationBusinessRules rules, IAuthService authService)
             {
                 _userRepository = userRepository;
                 _mapper = mapper;
                 _tokenHelper = tokenHelper;
                 _rules = rules;
+                _authService = authService;
             }
 
-            public async Task<ResultTokenDto> Handle(UserForLoginCommand request, CancellationToken cancellationToken)
+            public async Task<LoginDto> Handle(UserForLoginCommand request, CancellationToken cancellationToken)
             {
 
                 var userQueried = await _userRepository.GetAsync(
-                u => u.Email.ToLower() == request.Email.ToLower(),
+                u => u.Email.ToLower() == request.UserForLoginDto.Email.ToLower(),
                 include: m => m.Include(c => c.UserOperationClaims).ThenInclude(x => x.OperationClaim));
 
                 
@@ -50,10 +56,17 @@ namespace Application.Features.Authorization.Commands.UserForLogin
 
                 await _rules.VerifyOfPasswordHash(request);
 
-                var accessToken = _tokenHelper.CreateToken(userQueried, operationClaims);
+                AccessToken accessToken = await _authService.CreateAccessToken(userQueried);
+                RefreshToken createRefreshedToken = await _authService.CreateRefreshToken(userQueried, request.ipAdress);
+                RefreshToken refreshedToken = await _authService.AddRefreshToken(createRefreshedToken);
 
-                ResultTokenDto resultTokenDto = _mapper.Map<ResultTokenDto>(accessToken);  //map ekle
-                return resultTokenDto;
+                LoginDto loginDto = new()
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshedToken
+                };
+
+                return loginDto;
 
             }
         }

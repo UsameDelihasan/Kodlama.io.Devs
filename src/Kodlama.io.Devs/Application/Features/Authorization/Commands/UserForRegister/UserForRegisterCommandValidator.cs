@@ -11,10 +11,10 @@ namespace Application.Features.Authorization.Commands.UserForRegister
     {
         public UserForRegisterCommandValidator()
         {
-            RuleFor(r => r.FirstName).NotEmpty().NotNull();
-            RuleFor(r => r.LastName).NotEmpty().NotNull(); ; 
-            RuleFor(r => r.Email).NotEmpty().NotNull(); ;
-            RuleFor(r => r.Password).NotEmpty().NotNull(); ;   
+            RuleFor(r => r.UserForRegisterDto.FirstName).NotEmpty().NotNull();
+            RuleFor(r => r.UserForRegisterDto.LastName).NotEmpty().NotNull(); ; 
+            RuleFor(r => r.UserForRegisterDto.Email).NotEmpty().NotNull(); ;
+            RuleFor(r => r.UserForRegisterDto.Password).NotEmpty().NotNull(); ;   
         }
     }
 }

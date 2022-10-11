@@ -13,12 +13,11 @@ using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();  
 builder.Services.AddPersistenceServices(builder.Configuration);
 builder.Services.AddApplicationServices();
 builder.Services.AddSecurityServices();
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSwaggerGen(x =>
 {
@@ -80,8 +79,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         },
     };
 });
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -92,6 +94,8 @@ if (app.Environment.IsDevelopment())
 if (app.Environment.IsProduction())
 app.ConfigureCustomExceptionMiddleware();
 
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 
