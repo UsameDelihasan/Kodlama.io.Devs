@@ -12,8 +12,8 @@ namespace Application.Features.Authorization.Commands.UserForLogin
         public UserForLoginCommandValidator()
         {
 
-            RuleFor(r => r.Email).NotEmpty().NotNull();
-            RuleFor(r => r.Password).NotEmpty().NotNull();
+            RuleFor(r => r.UserForLoginDto.Email).NotEmpty().NotNull();
+            RuleFor(r => r.UserForLoginDto.Password).NotEmpty().NotNull();
         }
     }
 }

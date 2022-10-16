@@ -40,8 +40,8 @@ namespace Application.Features.Authorization.Rules
         
         public async Task VerifyOfPasswordHash(UserForLoginCommand request)
         {
-            var accountExist = await _accountRepository.GetAsync(u => u.Email == request.Email);
-            if (!HashingHelper.VerifyPasswordHash(request.Password, accountExist.PasswordHash, accountExist.PasswordSalt)) throw new BusinessException("Verification failed! ");
+            var accountExist = await _accountRepository.GetAsync(u => u.Email == request.UserForLoginDto.Email);
+            if (!HashingHelper.VerifyPasswordHash(request.UserForLoginDto.Password, accountExist.PasswordHash, accountExist.PasswordSalt)) throw new BusinessException("Verification failed! ");
         }
 
     }
