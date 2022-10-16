@@ -1,6 +1,7 @@
 ﻿using Application.Features.Frameworks.Dtos;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Security.Entities;
 using Domain.Entities;
 using MediatR;
 using System;

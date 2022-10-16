@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Features.Claims.Commands.CreateClaimCommand
+namespace Application.Features.Claims.Rules
 {
-    internal class CreateClaimCommand
+    public class ClaimBusinessRules
     {
+        
     }
 }

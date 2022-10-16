@@ -15,6 +15,8 @@ using Application.Features.Authorization.Rules;
 using Application.Features.Frameworks.Rules;
 using Application.Features.GitAccounts.Rules;
 using Application.Services.AuthServices;
+using Application.Features.Claims.Rules;
+using Application.Features.UserOperationClaims.Rules;
 
 namespace Application
 {
@@ -29,8 +31,10 @@ namespace Application
 
             services.AddScoped<ProgrammingLanguageBusinessRules>();
             services.AddScoped<AuthorizationBusinessRules>();
+            services.AddScoped<ClaimBusinessRules>();
             services.AddScoped<FrameworkBusinessRules>();
             services.AddScoped<GitAccountBusinessRules>();
+            services.AddScoped<UserOperationClaimBusinessRules>();
             services.AddScoped<IAuthService, AuthManager>();
 
 

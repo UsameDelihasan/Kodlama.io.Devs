@@ -12,7 +12,7 @@ namespace Domain.Entities
     {
         public virtual ICollection<GitAccount> GitAccounts { get; set; }
 
-        //public virtual ICollection<GitAccount> GitProfiles { get; set; } ICollection
+        
         
 
         public Account()
